@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Jasper hello</string>
+    <string name="app_name">SDP Scanner</string>
+    <string name="Select_Device">Select Device</string>
+    <string name="Discovery_Device_Service">Start SDP</string>
+	<string name="Device_Name">Device</string>
+	<string name="Device_Addr">Address</string>
+</resources>
