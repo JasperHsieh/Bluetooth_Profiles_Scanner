@@ -22,13 +22,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class SdpScannerActivity extends Activity {
-    
+
 	private final String TAG = "SdpScanner";
 	public static final String PICKER_ACTION = "android.bluetooth.devicepicker.action.LAUNCH";
 	public static final String PICKER_SELECTED = "android.bluetooth.devicepicker.action.DEVICE_SELECTED";
-    
+
     private BluetoothDevice mDevice;
-   
+
     private ArrayAdapter mArrayAdapter;
     private ArrayList<String> DiscoveredServices;
     private ListView ServicesListView;
@@ -38,7 +38,7 @@ public class SdpScannerActivity extends Activity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-	   
+
             Log.d(TAG, "mPickerReceiver get " + action);
 
             if (PICKER_SELECTED.equals(action)) {
@@ -47,12 +47,12 @@ public class SdpScannerActivity extends Activity {
                 unregisterReceiver(mPickerReceiver);
             }
         }
-    }; 
-	
+    };
+
     private final BroadcastReceiver mUuidReceiver = new BroadcastReceiver() {
 		@Override
-    	public void onReceive(Context context, Intent intent) {
-			
+        public void onReceive(Context context, Intent intent) {
+
 			String action = intent.getAction();
 			Log.d(TAG, "mUuidReceiver get " + action);
 			if (BluetoothDevice.ACTION_UUID.equals(action)) {
@@ -141,11 +141,11 @@ public class SdpScannerActivity extends Activity {
 
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         setContentView(R.layout.main);
-		
+
 		ServicesListView = (ListView)findViewById(R.id.service_list);
-        
+
 		DiscoveredServices = new ArrayList<String>();
         mArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, DiscoveredServices);
 		ServicesListView.setAdapter(mArrayAdapter);
@@ -156,11 +156,11 @@ public class SdpScannerActivity extends Activity {
 	    super.onStart();
 
         Log.d(TAG, "onStart");
-        
+
 		IntentFilter filter1 = new IntentFilter();
 		filter1.addAction(PICKER_SELECTED);
 		registerReceiver(mPickerReceiver, filter1);
-		
+
 		IntentFilter filter2 = new IntentFilter();
         filter2.addAction(BluetoothDevice.ACTION_UUID);
         registerReceiver(mUuidReceiver, filter2);
@@ -175,9 +175,9 @@ public class SdpScannerActivity extends Activity {
 
 		unregisterReceiver(mUuidReceiver);
 	}
-    
+
 	public void onButtonClick(View v){
-    	
+
 		Log.d(TAG,"onButtonClick");
 		if (v.getId() == R.id.select_device) {
 			Log.d(TAG, "select device");
@@ -193,16 +193,16 @@ public class SdpScannerActivity extends Activity {
 				DiscoveredServices.clear();
 			    mArrayAdapter.notifyDataSetChanged();
 			}
-			
+
 			//startUuidProgressBar();
 			if(mDevice != null){
 			    mDevice.fetchUuidsWithSdp();
 			}
 		}
     }
-    
+
 	private void updateDevice(BluetoothDevice device){
-	    
+
 		mDevice = device;
 		TextView name = (TextView)findViewById(R.id.device_name);
 		TextView bd_addr = (TextView)findViewById(R.id.device_addr);
@@ -213,9 +213,9 @@ public class SdpScannerActivity extends Activity {
 		}
 		DiscoveredServices.clear();
 	}
-    
+
     private void AddService(String service){
-	    
+
 		if(!DiscoveredServices.contains(service)){
 		    DiscoveredServices.add(service);
             mArrayAdapter.notifyDataSetChanged();
@@ -223,7 +223,7 @@ public class SdpScannerActivity extends Activity {
 	}
 
 	private void dump_arraylist(ArrayList<String> al){
-	    
+
 		for(int i=0; i<al.size(); i++){
 		    Log.d(TAG, "al[" + i + "]:" + al.get(i));
 		}

@@ -4,17 +4,17 @@ import android.os.ParcelUuid;
 
 
 public final class BluetoothAllUuid{
-    
+
     /* See Bluetooth Assigned Numbers document - SDP section, to get the values of UUIDs
     * for the various services.
     *
     * The following 128 bit values are calculated as:
     *  uuid * 2^96 + BASE_UUID
-    */ 
-    
+    */
+
     // ***** A2DP *****
     public static final ParcelUuid AudioSource =
-    	ParcelUuid.fromString("0000110A-0000-1000-8000-00805F9B34FB");
+        ParcelUuid.fromString("0000110A-0000-1000-8000-00805F9B34FB");
     public static final ParcelUuid AudioSink =
         ParcelUuid.fromString("0000110B-0000-1000-8000-00805F9B34FB");
     public static final ParcelUuid AdvAudioDist =

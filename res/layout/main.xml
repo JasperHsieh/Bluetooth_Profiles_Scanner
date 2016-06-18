@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:onClick="onButtonClick"
         android:text="@string/Select_Device" />
-    
+
     <TextView
         android:id="@+id/device_name"
 		android:layout_width="fill_parent"
@@ -27,7 +27,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/Device_Addr" />
-    
+
     <Button
         android:id="@+id/discovery_device_services"
         android:layout_width="wrap_content"
