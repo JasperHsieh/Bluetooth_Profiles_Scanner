@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.ComponentName;
@@ -28,6 +29,7 @@ public class SdpScannerActivity extends Activity {
 	public static final String PICKER_SELECTED = "android.bluetooth.devicepicker.action.DEVICE_SELECTED";
 
     private BluetoothDevice mDevice;
+    private BluetoothAdapter mBluetoothAdapter;
 
     private ArrayAdapter mArrayAdapter;
     private ArrayList<String> DiscoveredServices;
@@ -149,6 +151,8 @@ public class SdpScannerActivity extends Activity {
 		DiscoveredServices = new ArrayList<String>();
         mArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, DiscoveredServices);
 		ServicesListView.setAdapter(mArrayAdapter);
+
+		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     }
 
     @Override
@@ -179,6 +183,17 @@ public class SdpScannerActivity extends Activity {
 	public void onButtonClick(View v){
 
 		Log.d(TAG,"onButtonClick");
+
+		if(mBluetoothAdapter == null){
+		    Log.d(TAG, "Device not support Bluetooth");
+		}
+		else {
+		    if(!mBluetoothAdapter.isEnabled()){
+		        enableBluetooth();
+		        return;
+		    }
+		}
+
 		if (v.getId() == R.id.select_device) {
 			Log.d(TAG, "select device");
 
@@ -221,6 +236,12 @@ public class SdpScannerActivity extends Activity {
             mArrayAdapter.notifyDataSetChanged();
 		}
 	}
+
+    private void enableBluetooth(){
+
+        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+        startActivity(enableBtIntent);
+    }
 
 	private void dump_arraylist(ArrayList<String> al){
 
