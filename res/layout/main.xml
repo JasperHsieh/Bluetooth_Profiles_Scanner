@@ -20,13 +20,15 @@
         android:id="@+id/device_name"
 		android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Device_Name" />
+        android:text="@string/Device_Name" 
+		android:textSize="25sp"/>
 
     <TextView
 	    android:id="@+id/device_addr"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Device_Addr" />
+        android:text="@string/Device_Addr" 
+		android:textSize="20sp"/>
 
     <Button
         android:id="@+id/discovery_device_services"
