@@ -3,6 +3,7 @@ package com.sdpscanner.android;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.os.ParcelUuid;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ProgressBar;
@@ -35,7 +36,24 @@ public class SdpScannerActivity extends Activity {
     private ArrayList<String> DiscoveredServices;
     private ListView ServicesListView;
 
-    private final BroadcastReceiver mPickerReceiver = new BroadcastReceiver() {
+    private Profile mA2DP;
+	private Profile mAVRCCP;
+	private Profile mDUN;
+	private Profile mFTP;
+	private Profile mHFP;
+	private Profile mHSP;
+	private Profile mHID;
+	private Profile mMAP;
+	private Profile mOPP;
+	private Profile mSAP;
+
+    public class Profile{
+		public String Name;
+		public ArrayList<String> Services;
+
+	}
+
+	private final BroadcastReceiver mPickerReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -75,7 +93,7 @@ public class SdpScannerActivity extends Activity {
 						else if(BluetoothAllUuid.AudioSink.equals(uuid)){
 							AddService("AudioSink");
 						}
-						else if(BluetoothAllUuid.AdvAudioDist.equals(uuid)){
+						else if(BluetoothAllUuid.AdvancedAudioDistribution.equals(uuid)){
 							AddService("AdvAudioDist");
 						}
 						else if(BluetoothAllUuid.AvrcpTarget.equals(uuid)){
@@ -87,16 +105,16 @@ public class SdpScannerActivity extends Activity {
 						else if(BluetoothAllUuid.Handsfree.equals(uuid)){
 							AddService("Handsfree");
 						}
-						else if(BluetoothAllUuid.Handsfree_AG.equals(uuid)){
+						else if(BluetoothAllUuid.HandsfreeAudioGateway.equals(uuid)){
 							AddService("Handsfree_AG");
 						}
-						else if(BluetoothAllUuid.HSP.equals(uuid)){
+						else if(BluetoothAllUuid.Headset.equals(uuid)){
 							AddService("HSP");
 						}
-						else if(BluetoothAllUuid.HSP_AG.equals(uuid)){
+						else if(BluetoothAllUuid.HeadsetAudioGateway.equals(uuid)){
 							AddService("HSP_AG");
 						}
-						else if(BluetoothAllUuid.Hid.equals(uuid)){
+						else if(BluetoothAllUuid.HumanInterfaceDeviceService.equals(uuid)){
 							AddService("Hid");
 						}
 						else if(BluetoothAllUuid.MAS.equals(uuid)){
@@ -108,7 +126,7 @@ public class SdpScannerActivity extends Activity {
 						else if(BluetoothAllUuid.MAP.equals(uuid)){
 							AddService("MAP");
 						}
-						else if(BluetoothAllUuid.ObexObjectPush.equals(uuid)){
+						else if(BluetoothAllUuid.OBEXObjectPush.equals(uuid)){
 							AddService("ObexObjectPush");
 						}
 						else if(BluetoothAllUuid.OBEXFileTransfer.equals(uuid)){
