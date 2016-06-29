@@ -7,4 +7,6 @@
     <string name="Discovery_Device_Service">Start SDP</string>
 	<string name="Device_Name">Device</string>
 	<string name="Device_Addr">Address</string>
+	<string name="Supported_Profile">Supported Profile</string>
+	<string name="Supported_Service">Supported Service</string>
 </resources>

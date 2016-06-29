@@ -158,42 +158,89 @@ public final class BluetoothAllUuid{
 	        ParcelUuid.fromString("0000000f-0000-1000-8000-00805F9B34FB");
 
 
-	private HashSet<ParcelUuid> A2dpServices = new HashSet<ParcelUuid>(Arrays.asList(AudioSource, AudioSink, AdvancedAudioDistribution));
-	private HashSet<ParcelUuid> AvrcpServices = new HashSet<ParcelUuid>(Arrays.asList(AvrcpTarget, AvrcpController));
-	private HashSet<ParcelUuid> DunServices = new HashSet<ParcelUuid>(Arrays.asList(DialupNetworking));
-	private HashSet<ParcelUuid> FtpServices = new HashSet<ParcelUuid>(Arrays.asList(OBEXFileTransfer));
-	private HashSet<ParcelUuid> HfpServices = new HashSet<ParcelUuid>(Arrays.asList(Handsfree, HandsfreeAudioGateway));
-	private HashSet<ParcelUuid> HspServices = new HashSet<ParcelUuid>(Arrays.asList(Headset, HeadsetAudioGateway));
-	private HashSet<ParcelUuid> MapServices = new HashSet<ParcelUuid>(Arrays.asList(MAS, MNS, MAP));
-	private HashSet<ParcelUuid> OppServices = new HashSet<ParcelUuid>(Arrays.asList(OBEXObjectPush));
-	private HashSet<ParcelUuid> PbapServices = new HashSet<ParcelUuid>(Arrays.asList(PBAP, PBAP_PSE, PBAP_PCE));
-	private HashSet<ParcelUuid> PanServices  = new HashSet<ParcelUuid>(Arrays.asList(GN, PANU, NAP));
-	private HashSet<ParcelUuid> SapServices = new HashSet<ParcelUuid>(Arrays.asList(SIM_Access));
+	public static HashSet<ParcelUuid> A2dpProfileServices =
+	        new HashSet<ParcelUuid>(Arrays.asList(AudioSource, AudioSink, AdvancedAudioDistribution));
+	public static HashSet<ParcelUuid> AvrcpProfileServices =
+	        new HashSet<ParcelUuid>(Arrays.asList(AvrcpTarget, AvrcpController));
+	public static HashSet<ParcelUuid> BipProfileServices  =
+	        new HashSet<ParcelUuid>(Arrays.asList(Imaging, ImagingResponder, ImagingAutomaticArchive, ImagingReferencedObjects));
+	public static HashSet<ParcelUuid> BppProfileServices =
+	        new HashSet<ParcelUuid>(Arrays.asList(DirectPrinting, DirectPrinting, DirectPrintingReferenceObjectsService, ReflectedUI, BasicPrinting, PrintingStatus));
+	//private HashSet<ParcelUuid> DiProfileServices =
+	//        new HashSet<ParcelUuid>(Arrays.asList());
+	public static HashSet<ParcelUuid> DunProfileServices =
+	        new HashSet<ParcelUuid>(Arrays.asList(DialupNetworking));
+	public static HashSet<ParcelUuid> FtpProfileServices =
+	        new HashSet<ParcelUuid>(Arrays.asList(OBEXFileTransfer));
+	//private HashSet<ParcelUuid>  GavdpProfileServices =
+	//        new HashSet<ParcelUuid>(Arrays.asList());
+	//private HashSet<ParcelUuid>  GoepProfileServices =
+	//        new HashSet<ParcelUuid>(Arrays.asList());
+	public static HashSet<ParcelUuid> HfpProfileServices =
+	        new HashSet<ParcelUuid>(Arrays.asList(Handsfree, HandsfreeAudioGateway));
+	//private HashSet<ParcelUuid>  HcrpProfileServices =
+	//        new HashSet<ParcelUuid>(Arrays.asList());
+	//private HashSet<ParcelUuid>  HdpProfileServices =
+	//        new HashSet<ParcelUuid>(Arrays.asList());
+	public static HashSet<ParcelUuid> HspProfileServices =
+	        new HashSet<ParcelUuid>(Arrays.asList(Headset, HeadsetAudioGateway));
+	//private HashSet<ParcelUuid>  HidProfileServices =
+	//        new HashSet<ParcelUuid>(Arrays.asList());
+	public static HashSet<ParcelUuid> MapProfileServices =
+	        new HashSet<ParcelUuid>(Arrays.asList(MAS, MNS, MAP));
+	//private HashSet<ParcelUuid>  MpsProfileServices =
+	//        new HashSet<ParcelUuid>(Arrays.asList());
+	public static HashSet<ParcelUuid> OppProfileServices =
+	        new HashSet<ParcelUuid>(Arrays.asList(OBEXObjectPush));
+	public static HashSet<ParcelUuid> PbapProfileServices =
+	        new HashSet<ParcelUuid>(Arrays.asList(PBAP, PBAP_PSE, PBAP_PCE));
+	public static HashSet<ParcelUuid> PanProfileServices =
+	        new HashSet<ParcelUuid>(Arrays.asList(GN, PANU, NAP));
+	public static HashSet<ParcelUuid> SapProfileServices =
+	        new HashSet<ParcelUuid>(Arrays.asList(SIM_Access));
+	//private HashSet<ParcelUuid> SdapProfile =
+	//        new HashSet<ParcelUuid>(Arrays.asList());
+	public static HashSet<ParcelUuid> SppProfileServices =
+	        new HashSet<ParcelUuid>(Arrays.asList(SerialPort));
+	public static HashSet<ParcelUuid> SyncProfileServices =
+	        new HashSet<ParcelUuid>(Arrays.asList(IrMCSync, IrMCSyncCommand));
+	public static HashSet<ParcelUuid> VdpProfileServices =
+	        new HashSet<ParcelUuid>(Arrays.asList(VideoSource, VideoSink, VideoDistribution));
 
 	public int getProfileFromUuid(Parcelable uuid){
 
-		if(A2dpServices.contains(uuid)){
+        if(A2dpProfileServices.contains(uuid)){
 		    return Profile.A2dpProfile;
-		} else if(AvrcpServices.contains(uuid)){
+		} else if(AvrcpProfileServices.contains(uuid)){
 		    return Profile.AvrcpProfile;
-		} else if(DunServices.contains(uuid)){
+		} else if(BipProfileServices.contains(uuid)){
+		    return Profile.BipProfile;
+		} else if(BppProfileServices.contains(uuid)){
+		    return Profile.BppProfile;
+		} else if(DunProfileServices.contains(uuid)){
 		    return Profile.DunProfile;
-		} else if(FtpServices.contains(uuid)){
+		} else if(FtpProfileServices.contains(uuid)){
 		    return Profile.FtpProfile;
-		} else if(HfpServices.contains(uuid)){
+		} else if(HfpProfileServices.contains(uuid)){
 		    return Profile.HfpProfile;
-		} else if(HspServices.contains(uuid)){
+		} else if(HspProfileServices.contains(uuid)){
 		    return Profile.HspProfile;
-		} else if(MapServices.contains(uuid)){
+		} else if(MapProfileServices.contains(uuid)){
 		    return Profile.MapProfile;
-		} else if(OppServices.contains(uuid)){
+		} else if(OppProfileServices.contains(uuid)){
 		    return Profile.OppProfile;
-		} else if(PbapServices.contains(uuid)){
+		} else if(PbapProfileServices.contains(uuid)){
 		    return Profile.PbapProfile;
-		} else if(PanServices.contains(uuid)){
+		} else if(PanProfileServices.contains(uuid)){
 		    return Profile.PanProfile;
-		} else if(SapServices.contains(uuid)){
+		} else if(SapProfileServices.contains(uuid)){
 		    return Profile.SapProfile;
+		} else if(SppProfileServices.contains(uuid)){
+		    return Profile.SppProfile;
+		} else if(SyncProfileServices.contains(uuid)){
+		    return Profile.SyncProfile;
+		} else if(VdpProfileServices.contains(uuid)){
+		    return Profile.VdpProfile;
 		} else {
 		    return Profile.UnknowProfile;
 		}
