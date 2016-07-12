@@ -31,27 +31,40 @@ public class SdpScannerActivity extends Activity {
 
     private BluetoothDevice mDevice;
     private BluetoothAdapter mBluetoothAdapter;
+    private boolean isSecondUUIDs;
 
-    private ArrayAdapter mArrayAdapter;
-    private ArrayList<String> DiscoveredServices;
+    private ProfileAdapter mAdapter;
+    private ArrayList<Integer> DiscoveredServices;
+    private ArrayList<Parcelable> UnknowServices;
     private ListView ServicesListView;
+    private ArrayList<Profile> DiscoveredProfiles;
 
     private Profile mA2DP;
-	private Profile mAVRCCP;
+	private Profile mAVRCP;
+	private Profile mBIP;
+	private Profile mBPP;
+	//private Profile mDI;
 	private Profile mDUN;
 	private Profile mFTP;
+	//private Profile mGAVDP;
+	//private Profile mGOEP;
 	private Profile mHFP;
+	//private Profile mHCRP;
+	//private Profile mHDP;
 	private Profile mHSP;
-	private Profile mHID;
+	//private Profile mHID;
 	private Profile mMAP;
+	//private Profile mMPS;
 	private Profile mOPP;
+	private Profile mPBAP;
+	private Profile mPAN;
 	private Profile mSAP;
+	//private Profile mSDAP;
+	private Profile mSPP;
+	private Profile mSYNCP;
+	private Profile mVDP;
+	private Profile mOTHERS;
 
-    public class Profile{
-		public String Name;
-		public ArrayList<String> Services;
-
-	}
 
 	private final BroadcastReceiver mPickerReceiver = new BroadcastReceiver() {
 
@@ -80,6 +93,10 @@ public class SdpScannerActivity extends Activity {
 				if (!dev.equals(mDevice)) {
 					return;
 				}
+                if(isSecondUUIDs){
+                    Log.d(TAG, "Return second intent of UUID");
+                    return;
+                }
 				Parcelable uuids[] = intent.getParcelableArrayExtra(BluetoothDevice.EXTRA_UUID);
 
 				//stopUuidProgressBar();
@@ -87,77 +104,53 @@ public class SdpScannerActivity extends Activity {
 				if (uuids != null) {
 					for (Parcelable uuid : uuids) {
 						Log.d(TAG, "uuid:" + uuid);
-						if(BluetoothAllUuid.AudioSource.equals(uuid)){
-							AddService("AudioSource");
-						}
-						else if(BluetoothAllUuid.AudioSink.equals(uuid)){
-							AddService("AudioSink");
-						}
-						else if(BluetoothAllUuid.AdvancedAudioDistribution.equals(uuid)){
-							AddService("AdvAudioDist");
-						}
-						else if(BluetoothAllUuid.AvrcpTarget.equals(uuid)){
-							AddService("AvrcpTarget");
-						}
-						else if(BluetoothAllUuid.AvrcpController.equals(uuid)){
-							AddService("AvrcpController");
-						}
-						else if(BluetoothAllUuid.Handsfree.equals(uuid)){
-							AddService("Handsfree");
-						}
-						else if(BluetoothAllUuid.HandsfreeAudioGateway.equals(uuid)){
-							AddService("Handsfree_AG");
-						}
-						else if(BluetoothAllUuid.Headset.equals(uuid)){
-							AddService("HSP");
-						}
-						else if(BluetoothAllUuid.HeadsetAudioGateway.equals(uuid)){
-							AddService("HSP_AG");
-						}
-						else if(BluetoothAllUuid.HumanInterfaceDeviceService.equals(uuid)){
-							AddService("Hid");
-						}
-						else if(BluetoothAllUuid.MAS.equals(uuid)){
-							AddService("MAS");
-						}
-						else if(BluetoothAllUuid.MNS.equals(uuid)){
-							AddService("MNS");
-						}
-						else if(BluetoothAllUuid.MAP.equals(uuid)){
-							AddService("MAP");
-						}
-						else if(BluetoothAllUuid.OBEXObjectPush.equals(uuid)){
-							AddService("ObexObjectPush");
-						}
-						else if(BluetoothAllUuid.OBEXFileTransfer.equals(uuid)){
-							AddService("OBEXFileTransfer");
-						}
-						else if(BluetoothAllUuid.PANU.equals(uuid)){
-							AddService("PANU");
-						}
-						else if(BluetoothAllUuid.NAP.equals(uuid)){
-							AddService("NAP");
-						}
-						else if(BluetoothAllUuid.PBAP_PSE.equals(uuid)){
-							AddService("PBAP_PSE");
-						}
-						else if(BluetoothAllUuid.PBAP_PCE.equals(uuid)){
-							AddService("PBAP_PCE");
-						}
-						else if(BluetoothAllUuid.BNEP.equals(uuid)){
-							AddService("BNEP");
-						}
-						else if(BluetoothAllUuid.BASE_UUID.equals(uuid)){
-							AddService("BASE_UUID");
-						}
-						else{
-							Log.d(TAG, "no match service");
-						}
-					}
+                        int service = BluetoothAllUuid.getServiceFromUuid(uuid);
+                        if(service != Profile.UnknowService){
+                            if(!DiscoveredServices.contains(service)){
+                                DiscoveredServices.add(service);
+                            }
+                        } else{
+                            if(!UnknowServices.contains(uuid)){
+                                UnknowServices.add(uuid);
+                                //TODO
+                                //mAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                    //dumpDiscoveredServices();
+                    handleDiscoveredServics();
+                    isSecondUUIDs = true;
 				}
 			}
 		}
 	};
+
+    public void initial(){
+
+        DiscoveredProfiles = new ArrayList();
+        DiscoveredServices = new ArrayList<Integer>();
+        UnknowServices = new ArrayList();
+        mAdapter = new ProfileAdapter(this, DiscoveredProfiles, UnknowServices);
+
+        mA2DP = new Profile(Profile.A2dpProfile);
+        mAVRCP = new Profile(Profile.AvrcpProfile);
+        mBIP = new Profile(Profile.BipProfile);
+        mBPP = new Profile(Profile.BppProfile);
+        mDUN = new Profile(Profile.DunProfile);
+        mFTP = new Profile(Profile.FtpProfile);
+        mHFP = new Profile(Profile.HfpProfile);
+        mHSP = new Profile(Profile.HspProfile);
+        mMAP = new Profile(Profile.MapProfile);
+        mOPP = new Profile(Profile.OppProfile);
+        mPBAP = new Profile(Profile.PbapProfile);
+        mPAN = new Profile(Profile.PanProfile);
+        mSAP = new Profile(Profile.SapProfile);
+        mSPP = new Profile(Profile.SppProfile);
+        mSYNCP = new Profile(Profile.SyncProfile);
+        mVDP = new Profile(Profile.VdpProfile);
+        mOTHERS = new Profile(Profile.UnknowProfile);
+
+	}
 
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -165,12 +158,11 @@ public class SdpScannerActivity extends Activity {
         setContentView(R.layout.main);
 
 		ServicesListView = (ListView)findViewById(R.id.service_list);
-
-		DiscoveredServices = new ArrayList<String>();
-        mArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, DiscoveredServices);
-		ServicesListView.setAdapter(mArrayAdapter);
-
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        isSecondUUIDs = false;
+        initial();
+        ServicesListView.setAdapter(mAdapter);
     }
 
     @Override
@@ -224,7 +216,6 @@ public class SdpScannerActivity extends Activity {
 			Log.d(TAG, "discovery start");
 			if(DiscoveredServices.size() != 0){
 				DiscoveredServices.clear();
-			    mArrayAdapter.notifyDataSetChanged();
 			}
 
 			//startUuidProgressBar();
@@ -244,28 +235,134 @@ public class SdpScannerActivity extends Activity {
 		    name.setText(mDevice.getName());
 			bd_addr.setText(mDevice.getAddress());
 		}
+		isSecondUUIDs = false;
 		DiscoveredServices.clear();
+		UnknowServices.clear();
+		mAdapter.notifyDataSetChanged();
 	}
-
-    private void AddService(String service){
+/*
+    private void AddService(int service){
 
 		if(!DiscoveredServices.contains(service)){
 		    DiscoveredServices.add(service);
-            mArrayAdapter.notifyDataSetChanged();
 		}
 	}
-
+*/
     private void enableBluetooth(){
 
         Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
         startActivity(enableBtIntent);
     }
 
-	private void dump_arraylist(ArrayList<String> al){
+	private void dumpDiscoveredProfiles(){
 
-		for(int i=0; i<al.size(); i++){
-		    Log.d(TAG, "al[" + i + "]:" + al.get(i));
-		}
-	}
+        if(DiscoveredProfiles == null)return;
 
+        Log.d(TAG, "dump DiscoveredProfiles");
+        for(int i=0; i<DiscoveredProfiles.size(); i++){
+
+            ArrayList<Integer> s = DiscoveredProfiles.get(i).getServices();
+            Log.d(TAG, "----- " + i + " -----");
+            Log.d(TAG,"Profile: " + DiscoveredProfiles.get(i).getReadableProfileName());
+            for(int j=0; j<s.size(); j++){
+                Log.d(TAG, "Service: " + DiscoveredProfiles.get(i).getReadableServiceName(s.get(j)));
+            }
+        }
+    }
+
+	private void dumpDiscoveredServices(){
+        if(DiscoveredServices == null)return;
+
+        Log.d(TAG, "dump DiscoveredServices");
+        for(int i=0; i<DiscoveredServices.size(); i++){
+            Log.d(TAG, "Service: " + DiscoveredServices.get(i));
+        }
+    }
+
+    private void handleDiscoveredServics(){
+        Log.d(TAG, "handleDiscoveredService");
+
+        for(int service: DiscoveredServices){
+
+            if(Profile.A2dpProfileServices.contains(service)){
+                if(!mA2DP.containService(service)){
+                    mA2DP.AddService(service);
+                }
+            } else if(Profile.AvrcpProfileServices.contains(service)){
+                if(!mAVRCP.containService(service)){
+                    mAVRCP.AddService(service);
+                }
+            } else if(Profile.BipProfileServices.contains(service)){
+                if(!mBIP.containService(service)){
+                    mBIP.AddService(service);
+                }
+            } else if(Profile.BppProfileServices.contains(service)){
+                if(!mBPP.containService(service)){
+                    mBPP.AddService(service);
+                }
+            } else if(Profile.DunProfileServices.contains(service)){
+                if(!mDUN.containService(service)){
+                    mDUN.AddService(service);
+                }
+            } else if(Profile.FtpProfileServices.contains(service)){
+                if(!mFTP.containService(service)){
+                    mFTP.AddService(service);
+                }
+            } else if(Profile.HfpProfileServices.contains(service)){
+                if(!mHFP.containService(service)){
+                    mHFP.AddService(service);
+                }
+            } else if(Profile.HspProfileServices.contains(service)){
+                if(!mHSP.containService(service)){
+                    mHSP.AddService(service);
+                }
+            } else if(Profile.MapProfileServices.contains(service)){
+                if(!mMAP.containService(service)){
+                    mMAP.AddService(service);
+                }
+            } else if(Profile.OppProfileServices.contains(service)){
+                if(!mOPP.containService(service)){
+                    mOPP.AddService(service);
+                }
+            } else if(Profile.PbapProfileServices.contains(service)){
+                if(!mPBAP.containService(service)){
+                    mPBAP.AddService(service);
+                }
+            } else if(Profile.PanProfileServices.contains(service)){
+                if(!mPAN.containService(service)){
+                    mPAN.AddService(service);
+                }
+            } else if(Profile.SapProfileServices.contains(service)){
+                if(!mSAP.containService(service)){
+                    mSAP.AddService(service);
+                }
+            } else if(Profile.SppProfileServices.contains(service)){
+                if(!mSPP.containService(service)){
+                    mSPP.AddService(service);
+                }
+            } else if(Profile.SyncProfileServices.contains(service)){
+                if(!mSYNCP.containService(service)){
+                    mSYNCP.AddService(service);
+                }
+            } else if(Profile.VdpProfileServices.contains(service)){
+                if(!mVDP.containService(service)){
+                    mVDP.AddService(service);
+                }
+            } else {
+                // handle servie where its profile is unknow
+                if(!mOTHERS.containService(service)){
+                    mOTHERS.AddService(service);
+                }
+            }
+        }
+        Profile[] tmp = {mA2DP, mAVRCP, mBIP, mBPP, mDUN, mFTP, mHFP, mHSP, mMAP,
+		        mOPP, mPBAP, mPAN, mSAP, mSPP,mSYNCP, mVDP, mOTHERS};
+        for(Profile profile: tmp){
+            if(profile.getServicesCount() != 0){
+                DiscoveredProfiles.add(profile);
+            }
+        }
+        mAdapter.notifyDataSetChanged();
+        dumpDiscoveredProfiles();
+    }
 }

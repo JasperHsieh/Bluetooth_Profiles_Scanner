@@ -247,7 +247,7 @@ public final class BluetoothAllUuid{
 
 	}
 
-    public int getServiceFromUuid(Parcelable uuid){
+    public static int getServiceFromUuid(Parcelable uuid){
 
         if(ServiceDiscoveryServerServiceClassID.equals(uuid)){
 	        return Profile.ServiceDiscoveryServerServiceClassIDService;
