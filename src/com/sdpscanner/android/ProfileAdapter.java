@@ -75,24 +75,32 @@ public class ProfileAdapter extends BaseAdapter {
 		    TextView profile_textview = (TextView)convertView.findViewById(R.id.supported_profile);
 			holder = new Holder(profile_textview, ll);
             convertView.setTag(holder);
-		} else {
-		    Log.d(TAG, "convertView is not null");
-		    // use the old view
-	        holder = (Holder) convertView.getTag();	
-		}
-        Log.d(TAG, "handle list");
+
+        } else {
+            Log.d(TAG, "convertView is not null");
+            // use the old view
+            holder = (Holder) convertView.getTag();
+        }
+
+        // Remove services view every time at first when getView is called
+        Log.d(TAG, "layout children count before: " + ((ViewGroup)holder.linearLayout).getChildCount());
+        int childrenCount = ((ViewGroup)holder.linearLayout).getChildCount();
+        for(int i=childrenCount-1; i>0; i--){
+            Log.d(TAG, "remove " + i + "th view");
+            ((ViewGroup)holder.linearLayout).removeViewAt(i);
+        }
+        Log.d(TAG, "layout children count after: " + ((ViewGroup)holder.linearLayout).getChildCount());
+
         Profile profile;
 		ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		if(position < getCount()-1){
 		    Log.d(TAG, "Know Services");
-			// handle Know profile and unknow profile(but know services)
-		    profile = (Profile)getItem(position);
-			holder.profile_tv.setText(profile.getReadableProfileName());
-
-		    ArrayList<Integer> services = profile.getServices();
+            // handle Know profile and unknow profile(but know services)
+            profile = (Profile)getItem(position);
+            holder.profile_tv.setText(profile.getReadableProfileName());
+            ArrayList<Integer> services = profile.getServices();
 
 		    for(int i=0; i<services.size(); i++){
-
 			    TextView service_tv = new TextView(mContext);
 		   	    TextView service_uuid_tv = new TextView(mContext);
 
@@ -101,7 +109,7 @@ public class ProfileAdapter extends BaseAdapter {
                 service_uuid_tv.setText(profile.getUuid(services.get(i)));
 
 				holder.linearLayout.addView(service_tv, params);
-				holder.linearLayout.addView(service_uuid_tv);
+				holder.linearLayout.addView(service_uuid_tv, params);
 		    }
 			
 		} else if(position == getCount()-1){
@@ -109,16 +117,17 @@ public class ProfileAdapter extends BaseAdapter {
 			// handle unknow services
 		    holder.profile_tv.setText("Unknow Services");
             
-			TextView unknowService_tv = new TextView(mContext);
 			ArrayList<ParcelUuid> unknowServices = (ArrayList<ParcelUuid>)getItem(position);
 			for(ParcelUuid uuid: unknowServices){
-			    unknowService_tv.setText(uuid.toString());
-			    //holder.linearLayout.addView(unknowService_tv, params);
-			    holder.linearLayout.addView(unknowService_tv);
+
+                TextView unknowService_tv = new TextView(mContext);
+                unknowService_tv.setText(uuid.toString());
+                holder.linearLayout.addView(unknowService_tv,params);
 			}
 
 
 		}
+		Log.d(TAG, "layout children count: " + ((ViewGroup)holder.linearLayout).getChildCount());
 		return convertView;
 	}
 

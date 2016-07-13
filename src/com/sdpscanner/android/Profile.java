@@ -229,7 +229,7 @@ public class Profile{
 			case PanProfile:
 			    return "Personal Area Network Profile (PAN)";
 			case SapProfile:
-			    return "SIM Access Profile (SAP";
+			    return "SIM Access Profile (SAP)";
 			case SdapProfile:
 			    return "Service Discovery Application Profile (SDAP)";
 			case SppProfile:
