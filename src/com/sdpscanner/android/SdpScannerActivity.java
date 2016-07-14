@@ -76,6 +76,7 @@ public class SdpScannerActivity extends Activity {
 
             if (PICKER_SELECTED.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                Log.d(TAG, "select device: " + device.getName());
                 updateDevice(device);
                 unregisterReceiver(mPickerReceiver);
             }
@@ -236,8 +237,8 @@ public class SdpScannerActivity extends Activity {
 			bd_addr.setText(mDevice.getAddress());
 		}
 		isSecondUUIDs = false;
-		DiscoveredServices.clear();
-		UnknowServices.clear();
+
+		cleanUp();
 		mAdapter.notifyDataSetChanged();
 	}
 /*
@@ -365,4 +366,28 @@ public class SdpScannerActivity extends Activity {
         mAdapter.notifyDataSetChanged();
         dumpDiscoveredProfiles();
     }
+    private void cleanUp(){
+
+        DiscoveredServices.clear();
+        UnknowServices.clear();
+        DiscoveredProfiles.clear();
+
+        mA2DP.cleanUpServices();
+        mAVRCP.cleanUpServices();
+        mBIP.cleanUpServices();
+        mBPP.cleanUpServices();
+        mDUN.cleanUpServices();
+        mFTP.cleanUpServices();
+        mHFP.cleanUpServices();
+        mHSP.cleanUpServices();
+        mMAP.cleanUpServices();
+        mOPP.cleanUpServices();
+        mPBAP.cleanUpServices();
+        mPAN.cleanUpServices();
+        mSAP.cleanUpServices();
+        mSPP.cleanUpServices();
+        mSYNCP.cleanUpServices();
+        mVDP.cleanUpServices();
+        mOTHERS.cleanUpServices();
+	}
 }
