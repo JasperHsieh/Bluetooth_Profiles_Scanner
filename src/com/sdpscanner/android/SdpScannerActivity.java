@@ -186,10 +186,6 @@ public class SdpScannerActivity extends Activity {
 
         Log.d(TAG, "onStart");
 
-		IntentFilter filter1 = new IntentFilter();
-		filter1.addAction(PICKER_SELECTED);
-		registerReceiver(mPickerReceiver, filter1);
-
 		IntentFilter filter2 = new IntentFilter();
         filter2.addAction(BluetoothDevice.ACTION_UUID);
         registerReceiver(mUuidReceiver, filter2);
@@ -221,6 +217,10 @@ public class SdpScannerActivity extends Activity {
 
 		if (v.getId() == R.id.select_device) {
 			Log.d(TAG, "select device");
+
+		    IntentFilter filter1 = new IntentFilter();
+		    filter1.addAction(PICKER_SELECTED);
+		    registerReceiver(mPickerReceiver, filter1);
 
 			Intent intent = new Intent(PICKER_ACTION);
 			intent.setFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
