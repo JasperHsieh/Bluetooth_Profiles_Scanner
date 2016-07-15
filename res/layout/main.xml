@@ -153,11 +153,21 @@
             android:textColor="@color/blue"
             android:background="@color/ltgray"/>
     </LinearLayout>
-    <ListView
-	    android:id="@+id/service_list"
-		android:layout_marginLeft="10sp"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"/>
-
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        >
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_centerInParent="true"/>
+        <ListView
+            android:id="@+id/service_list"
+            android:layout_marginLeft="10sp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"/>
+    </RelativeLayout>
 
 </LinearLayout>

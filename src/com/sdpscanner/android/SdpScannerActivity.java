@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
@@ -45,6 +46,8 @@ public class SdpScannerActivity extends Activity {
     private View name_line;
     private TextView bd_addr_tv;
     private View bd_addr_line;
+
+	private ProgressBar mProgressBar;
 
     private Profile mA2DP;
 	private Profile mAVRCP;
@@ -107,7 +110,8 @@ public class SdpScannerActivity extends Activity {
                 }
 				Parcelable uuids[] = intent.getParcelableArrayExtra(BluetoothDevice.EXTRA_UUID);
 
-				//stopUuidProgressBar();
+				stopProgressBar();
+				showListView();
 
 				if (uuids != null) {
 					for (Parcelable uuid : uuids) {
@@ -170,6 +174,10 @@ public class SdpScannerActivity extends Activity {
         name_line = (View)findViewById(R.id.device_underLine);
         bd_addr_tv = (TextView)findViewById(R.id.device_addr);
         bd_addr_line = (View) findViewById(R.id.addr_underLine);
+        mProgressBar = (ProgressBar)findViewById(R.id.progress_bar);
+
+        stopProgressBar();
+        hideListView();
 
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         adjustTextUnderline();
@@ -232,8 +240,10 @@ public class SdpScannerActivity extends Activity {
 			if(DiscoveredServices.size() != 0){
 				DiscoveredServices.clear();
 			}
-
-			//startUuidProgressBar();
+            cleanUp();
+            isSecondUUIDs = false;
+            startProgressBar();
+            hideListView();
 			if(mDevice != null){
 			    mDevice.fetchUuidsWithSdp();
 			}
@@ -250,7 +260,6 @@ public class SdpScannerActivity extends Activity {
 		isSecondUUIDs = false;
         adjustTextUnderline();
 		cleanUp();
-		mAdapter.notifyDataSetChanged();
 	}
 /*
     private void AddService(int service){
@@ -400,6 +409,8 @@ public class SdpScannerActivity extends Activity {
         mSYNCP.cleanUpServices();
         mVDP.cleanUpServices();
         mOTHERS.cleanUpServices();
+
+        mAdapter.notifyDataSetChanged();
 	}
 
 	private void adjustTextUnderline(){
@@ -417,4 +428,20 @@ public class SdpScannerActivity extends Activity {
         bd_addr_params.width = ll_ap.getMeasuredWidth();
         bd_addr_line.setLayoutParams(bd_addr_params);
 	}
+
+    private void startProgressBar(){
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void stopProgressBar(){
+        mProgressBar.setVisibility(View.GONE);
+    }
+
+    private void showListView(){
+        ServicesListView.setVisibility(View.VISIBLE);
+    }
+
+    private void hideListView(){
+        ServicesListView.setVisibility(View.GONE);
+    }
 }
