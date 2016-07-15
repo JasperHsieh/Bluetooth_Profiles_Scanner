@@ -9,4 +9,7 @@
 	<string name="Device_Addr">Address</string>
 	<string name="Supported_Profile">Supported Profile</string>
 	<string name="Supported_Service">Supported Service</string>
+	<string name="Title">Sdp Scanner</string>
+	<string name="Target_Device">Target Device</string>
+	<string name="Discovered_Profiles">Discovered Profiles and Services</string>
 </resources>

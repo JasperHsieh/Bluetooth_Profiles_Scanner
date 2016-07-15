@@ -9,6 +9,7 @@ import android.widget.Toast;
 import android.widget.ProgressBar;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.LinearLayout;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -38,6 +40,11 @@ public class SdpScannerActivity extends Activity {
     private ArrayList<Parcelable> UnknowServices;
     private ListView ServicesListView;
     private ArrayList<Profile> DiscoveredProfiles;
+
+    private TextView name_tv;
+    private View name_line;
+    private TextView bd_addr_tv;
+    private View bd_addr_line;
 
     private Profile mA2DP;
 	private Profile mAVRCP;
@@ -159,11 +166,18 @@ public class SdpScannerActivity extends Activity {
         setContentView(R.layout.main);
 
 		ServicesListView = (ListView)findViewById(R.id.service_list);
-		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        name_tv = (TextView)findViewById(R.id.device_name);
+        name_line = (View)findViewById(R.id.device_underLine);
+        bd_addr_tv = (TextView)findViewById(R.id.device_addr);
+        bd_addr_line = (View) findViewById(R.id.addr_underLine);
 
+		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        adjustTextUnderline();
         isSecondUUIDs = false;
         initial();
         ServicesListView.setAdapter(mAdapter);
+
+
     }
 
     @Override
@@ -229,15 +243,12 @@ public class SdpScannerActivity extends Activity {
 	private void updateDevice(BluetoothDevice device){
 
 		mDevice = device;
-		TextView name = (TextView)findViewById(R.id.device_name);
-		TextView bd_addr = (TextView)findViewById(R.id.device_addr);
-
 		if(device != null){
-		    name.setText(mDevice.getName());
-			bd_addr.setText(mDevice.getAddress());
+		    name_tv.setText(mDevice.getName());
+            bd_addr_tv.setText(mDevice.getAddress());
 		}
 		isSecondUUIDs = false;
-
+        adjustTextUnderline();
 		cleanUp();
 		mAdapter.notifyDataSetChanged();
 	}
@@ -389,5 +400,21 @@ public class SdpScannerActivity extends Activity {
         mSYNCP.cleanUpServices();
         mVDP.cleanUpServices();
         mOTHERS.cleanUpServices();
+	}
+
+	private void adjustTextUnderline(){
+
+        // Handle under lines
+        LinearLayout ll_dp = (LinearLayout)findViewById(R.id.device_parent);
+        ll_dp.measure(0, 0);
+        ViewGroup.LayoutParams name_params = name_line.getLayoutParams();
+        name_params.width = ll_dp.getMeasuredWidth();
+        name_line.setLayoutParams(name_params);
+
+        LinearLayout ll_ap = (LinearLayout)findViewById(R.id.addr_parent);
+        ll_ap.measure(0, 0);
+        ViewGroup.LayoutParams bd_addr_params = bd_addr_line.getLayoutParams();
+        bd_addr_params.width = ll_ap.getMeasuredWidth();
+        bd_addr_line.setLayoutParams(bd_addr_params);
 	}
 }

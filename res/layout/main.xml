@@ -4,41 +4,158 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <TextView
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello" />
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="60sp"
+            android:layout_height="60sp"
+            android:layout_marginLeft="10sp"
+            android:src="@drawable/sdpscanner_icon"/>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Title"
+            android:layout_marginTop="13sp"
+            android:layout_marginLeft="7sp"
+            android:textSize="30sp"/>
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/select_device"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onButtonClick"
-        android:text="@string/Select_Device" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5sp"
+        android:background="@color/light_blue"
+        android:layout_marginLeft="10sp"
+        android:layout_marginTop="10sp"
+        android:layout_marginRight="10sp"
+        android:layout_marginBottom="20sp"/>
 
-    <TextView
-        android:id="@+id/device_name"
-		android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/Device_Name" 
-		android:textSize="25sp"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="40sp"
+        android:background="@color/ltgray"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30sp"
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="10sp"
+            android:text="@string/Target_Device"/>
+        <Button
+            android:id="@+id/select_device"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onButtonClick"
+            android:text="@string/Select_Device"
+            android:textSize="20sp"
+            android:layout_marginRight="20sp"
+            android:textColor="@color/blue"
+            android:background="@color/ltgray"
+            />
+	</LinearLayout>
 
-    <TextView
-	    android:id="@+id/device_addr"
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Device_Addr" 
-		android:textSize="20sp"/>
+        android:orientation="vertical"
+        android:layout_marginTop="20sp"
+        android:layout_marginBottom="40sp"
+        android:layout_marginLeft="10sp"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:id="@+id/device_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:id="@+id/device_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20sp"
+                    android:layout_marginRight="20sp"
+                    android:text="@string/Device_Name"
+                    android:textSize="23sp"/>
+            </LinearLayout>
+            <View
+                android:id="@+id/device_underLine"
+                android:layout_width="100sp"
+                android:layout_height="3sp"
+                android:background="@color/light_blue"
+                android:layout_marginTop="8sp"
+                android:layout_marginBottom="15sp"/>
+        </LinearLayout>
 
-    <Button
-        android:id="@+id/discovery_device_services"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onButtonClick"
-        android:text="@string/Discovery_Device_Service" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:id="@+id/addr_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:id="@+id/device_addr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Device_Addr"
+                    android:layout_marginLeft="20sp"
+                    android:layout_marginRight="20sp"
+                    android:textSize="18sp"/>
+            </LinearLayout>
+            <View
+                android:id="@+id/addr_underLine"
+                android:layout_width="100sp"
+                android:layout_height="3sp"
+                android:background="@color/light_blue"
+                android:layout_marginTop="8sp"
+                android:layout_marginBottom="15sp"/>
+        </LinearLayout>
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="40sp"
+        android:background="@color/ltgray"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30sp"
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            android:layout_weight="1"
+            android:layout_marginLeft="10sp"
+            android:text="@string/Discovered_Profiles"/>
+        <Button
+            android:id="@+id/discovery_device_services"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onButtonClick"
+            android:text="@string/Discovery_Device_Service"
+            android:textSize="20sp"
+            android:layout_marginRight="20sp"
+            android:textColor="@color/blue"
+            android:background="@color/ltgray"/>
+    </LinearLayout>
     <ListView
 	    android:id="@+id/service_list"
+		android:layout_marginLeft="10sp"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"/>
 
