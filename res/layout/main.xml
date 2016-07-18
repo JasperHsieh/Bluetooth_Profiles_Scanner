@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="20sp"
-        android:layout_marginBottom="40sp"
+        android:layout_marginBottom="20sp"
         android:layout_marginLeft="10sp"
         >
         <LinearLayout
@@ -165,6 +165,7 @@
             android:layout_centerInParent="true"/>
         <ListView
             android:id="@+id/service_list"
+            android:layout_marginTop="15sp"
             android:layout_marginLeft="10sp"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"/>

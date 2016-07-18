@@ -109,10 +109,7 @@ public class SdpScannerActivity extends Activity {
                     return;
                 }
 				Parcelable uuids[] = intent.getParcelableArrayExtra(BluetoothDevice.EXTRA_UUID);
-
 				stopProgressBar();
-				showListView();
-
 				if (uuids != null) {
 					for (Parcelable uuid : uuids) {
 						Log.d(TAG, "uuid:" + uuid);
@@ -124,15 +121,16 @@ public class SdpScannerActivity extends Activity {
                         } else{
                             if(!UnknowServices.contains(uuid)){
                                 UnknowServices.add(uuid);
-                                //TODO
-                                //mAdapter.notifyDataSetChanged();
                             }
                         }
                     }
                     //dumpDiscoveredServices();
                     handleDiscoveredServics();
+                    showListView();
                     isSecondUUIDs = true;
-				}
+                }else{
+                    Log.d(TAG, "UUID is null");
+                }
 			}
 		}
 	};
@@ -259,6 +257,7 @@ public class SdpScannerActivity extends Activity {
 		}
 		isSecondUUIDs = false;
         adjustTextUnderline();
+		hideListView();
 		cleanUp();
 	}
 /*

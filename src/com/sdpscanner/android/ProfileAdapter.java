@@ -12,6 +12,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.content.Context;
 import android.util.Log;
+import android.util.TypedValue;
+import android.graphics.Color;
 
 import java.util.ArrayList;
 
@@ -71,7 +73,7 @@ public class ProfileAdapter extends BaseAdapter {
 		    Log.d(TAG, "convertView is null");
             // handle view is null
 			convertView = mInflater.inflate(R.layout.profileview, null);
-			LinearLayout ll = (LinearLayout)convertView.findViewById(R.id.profile_item);
+			LinearLayout ll = (LinearLayout)convertView.findViewById(R.id.service_item);
 		    TextView profile_textview = (TextView)convertView.findViewById(R.id.supported_profile);
 			holder = new Holder(profile_textview, ll);
             convertView.setTag(holder);
@@ -84,11 +86,7 @@ public class ProfileAdapter extends BaseAdapter {
 
         // Remove services view every time at first when getView is called
         Log.d(TAG, "layout children count before: " + ((ViewGroup)holder.linearLayout).getChildCount());
-        int childrenCount = ((ViewGroup)holder.linearLayout).getChildCount();
-        for(int i=childrenCount-1; i>0; i--){
-            Log.d(TAG, "remove " + i + "th view");
-            ((ViewGroup)holder.linearLayout).removeViewAt(i);
-        }
+        ((ViewGroup)holder.linearLayout).removeAllViews();
         Log.d(TAG, "layout children count after: " + ((ViewGroup)holder.linearLayout).getChildCount());
 
         Profile profile;
@@ -105,8 +103,10 @@ public class ProfileAdapter extends BaseAdapter {
 		   	    TextView service_uuid_tv = new TextView(mContext);
 
                 Log.d(TAG, "Adding service to row");
-				service_tv.setText(profile.getReadableServiceName(services.get(i)));
+                service_tv.setText(profile.getReadableServiceName(services.get(i)));
+                service_tv.setTextColor(Color.parseColor("#7e7c7c"));
                 service_uuid_tv.setText(profile.getUuid(services.get(i)));
+                service_uuid_tv.setTextColor(Color.parseColor("#7e7c7c"));
 
 				holder.linearLayout.addView(service_tv, params);
 				holder.linearLayout.addView(service_uuid_tv, params);
@@ -122,6 +122,7 @@ public class ProfileAdapter extends BaseAdapter {
 
                 TextView unknowService_tv = new TextView(mContext);
                 unknowService_tv.setText(uuid.toString());
+                unknowService_tv.setTextColor(Color.parseColor("#7e7c7c"));
                 holder.linearLayout.addView(unknowService_tv,params);
 			}
 

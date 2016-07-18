@@ -191,7 +191,7 @@ public class Profile{
 
 		switch(mName){
 		    case A2dpProfile:
-			    return "Advanced Audio Distribution Profile(A2DP)";
+			    return "Advanced Audio Distribution Profile (A2DP)";
 			case AvrcpProfile:
 			    return "Audio/Video Remote Control Profile (AVRCP)";
 			case BipProfile:
