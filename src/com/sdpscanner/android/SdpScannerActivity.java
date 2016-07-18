@@ -241,6 +241,7 @@ public class SdpScannerActivity extends Activity {
 			}
             cleanUp();
             isSecondUUIDs = false;
+            if(mDevice == null)return;
             startProgressBar();
             hideListView();
 			if(mDevice != null){
