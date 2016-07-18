@@ -50,13 +50,14 @@
         <Button
             android:id="@+id/select_device"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:onClick="onButtonClick"
             android:text="@string/Select_Device"
             android:textSize="20sp"
-            android:layout_marginRight="20sp"
+            android:paddingRight="20sp"
+            android:paddingLeft="20sp"
             android:textColor="@color/blue"
-            android:background="@color/ltgray"
+            android:background="@drawable/button"
             />
 	</LinearLayout>
 
@@ -145,13 +146,14 @@
         <Button
             android:id="@+id/discovery_device_services"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:onClick="onButtonClick"
             android:text="@string/Discovery_Device_Service"
             android:textSize="20sp"
-            android:layout_marginRight="20sp"
+            android:paddingRight="20sp"
+            android:paddingLeft="20sp"
             android:textColor="@color/blue"
-            android:background="@color/ltgray"/>
+            android:background="@drawable/button"/>
     </LinearLayout>
     <RelativeLayout
         android:layout_width="fill_parent"
