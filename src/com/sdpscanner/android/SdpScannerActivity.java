@@ -1,6 +1,8 @@
 package com.sdpscanner.android;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.ParcelUuid;
@@ -19,6 +21,7 @@ import android.content.ComponentName;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -241,7 +244,10 @@ public class SdpScannerActivity extends Activity {
 			}
             cleanUp();
             isSecondUUIDs = false;
-            if(mDevice == null)return;
+            if(mDevice == null){
+                createDialog("Target Device is not selected", "Pleae select one device near you").show();
+                return;
+            }
             startProgressBar();
             hideListView();
 			if(mDevice != null){
@@ -444,5 +450,17 @@ public class SdpScannerActivity extends Activity {
 
     private void hideListView(){
         ServicesListView.setVisibility(View.GONE);
+    }
+
+    private AlertDialog createDialog(String title, String msg){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title)
+               .setMessage(msg)
+               .setPositiveButton("OK", new DialogInterface.OnClickListener(){
+                   @Override
+                   public void onClick(DialogInterface dialog, int id){
+                   }
+               });
+        return builder.create();
     }
 }
