@@ -119,7 +119,8 @@ public class SdpScannerActivity extends Activity {
                                 DiscoveredServices.add(service);
                             }
                         } else{
-                            if(!UnknowServices.contains(uuid)){
+                            if(!(uuid.toString().equals(BluetoothAllUuid.BASE_UUID.toString())) && !UnknowServices.contains(uuid)){
+                                Log.d(TAG, "add unknow service: " + uuid.toString());
                                 UnknowServices.add(uuid);
                             }
                         }

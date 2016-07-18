@@ -24,6 +24,7 @@ public class ProfileAdapter extends BaseAdapter {
 	private ArrayList<Parcelable> listUnknowServices;
 	private final Context mContext;
 	private String TAG ="SdpScanner";
+	private int hasUnknowService;
 
 	public ProfileAdapter(Context context, ArrayList<Profile> profiles, ArrayList<Parcelable> unknowServices){
 	    mContext = context;
@@ -33,17 +34,22 @@ public class ProfileAdapter extends BaseAdapter {
 	
 	@Override
 	public int getCount(){
-	    return listProfiles.size() + 1; // all profiles + unknow services
+        if(listUnknowServices.size() > 0){
+            hasUnknowService = 1;
+        } else{
+            hasUnknowService = 0;
+        }
+        return listProfiles.size() + hasUnknowService; // all profiles + unknow services
 	}
 
 	@Override
 	public Object getItem(int position){
 	    // Let last item be unknow Services, others are profiles
 		Log.d(TAG, "getItem");
-		if(position < getCount()-1){
+		if(position < getCount() - hasUnknowService){
 		    dumpProfile(listProfiles.get(position));
 			return listProfiles.get(position);
-		} else if (position == getCount()-1){
+		} else if (position == getCount() - hasUnknowService){
 		    return listUnknowServices;
 		} else{
 		    return null;
@@ -91,7 +97,8 @@ public class ProfileAdapter extends BaseAdapter {
 
         Profile profile;
 		ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-		if(position < getCount()-1){
+		Log.d(TAG, "jasper getCount: " + getCount());
+		if(position < getCount() - hasUnknowService){
 		    Log.d(TAG, "Know Services");
             // handle Know profile and unknow profile(but know services)
             profile = (Profile)getItem(position);
@@ -112,22 +119,22 @@ public class ProfileAdapter extends BaseAdapter {
 				holder.linearLayout.addView(service_uuid_tv, params);
 		    }
 			
-		} else if(position == getCount()-1){
+		} else if(position == getCount() - hasUnknowService){
 		    Log.d(TAG, "Unknow services");
 			// handle unknow services
-		    holder.profile_tv.setText("Unknow Services");
             
 			ArrayList<ParcelUuid> unknowServices = (ArrayList<ParcelUuid>)getItem(position);
-			for(ParcelUuid uuid: unknowServices){
+            if(unknowServices.size() != 0){
+                holder.profile_tv.setText("Unknow Services");
+                for(ParcelUuid uuid: unknowServices){
+                    TextView unknowService_tv = new TextView(mContext);
+                    unknowService_tv.setText(uuid.toString());
+                    unknowService_tv.setTextColor(Color.parseColor("#7e7c7c"));
+                    holder.linearLayout.addView(unknowService_tv,params);
+                }
+            }
 
-                TextView unknowService_tv = new TextView(mContext);
-                unknowService_tv.setText(uuid.toString());
-                unknowService_tv.setTextColor(Color.parseColor("#7e7c7c"));
-                holder.linearLayout.addView(unknowService_tv,params);
-			}
-
-
-		}
+        }
 		Log.d(TAG, "layout children count: " + ((ViewGroup)holder.linearLayout).getChildCount());
 		return convertView;
 	}
