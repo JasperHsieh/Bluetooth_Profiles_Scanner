@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Button;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
@@ -25,6 +26,8 @@ import android.content.DialogInterface;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.LayoutInflater;
+import android.view.View.OnClickListener;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -454,13 +457,20 @@ public class SdpScannerActivity extends Activity {
 
     private AlertDialog createDialog(String title, String msg){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(title)
-               .setMessage(msg)
-               .setPositiveButton("OK", new DialogInterface.OnClickListener(){
-                   @Override
-                   public void onClick(DialogInterface dialog, int id){
-                   }
-               });
-        return builder.create();
+        //AlertDialog dialog = builder.create();
+
+        LayoutInflater inflater = (LayoutInflater)getApplicationContext().getSystemService
+            (Context.LAYOUT_INFLATER_SERVICE);
+        View dialogView = inflater.inflate(R.layout.dialog, null);
+        ((TextView)dialogView.findViewById(R.id.dialog_title)).setText(title);
+        ((TextView)dialogView.findViewById(R.id.dialog_msg)).setText(msg);
+        builder.setView(dialogView);
+        final AlertDialog dialog = builder.create();
+        ((Button)dialogView.findViewById(R.id.dialog_button)).setOnClickListener(new OnClickListener(){
+            public void onClick(View v){
+                dialog.dismiss();
+            }
+        });
+        return dialog;
     }
 }

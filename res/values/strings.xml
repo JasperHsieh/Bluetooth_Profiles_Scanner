@@ -12,4 +12,5 @@
 	<string name="Title">Sdp Scanner</string>
 	<string name="Target_Device">Target Device</string>
 	<string name="Discovered_Profiles">Discovered Profiles and Services</string>
+	<string name="Ok">OK</string>
 </resources>
