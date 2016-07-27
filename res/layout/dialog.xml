@@ -9,13 +9,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/hello"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:background="@color/light_blue"
         android:gravity="center"
-        android:paddingLeft="20sp" 
-        android:paddingRight="20sp" 
-        android:paddingTop="10sp" 
-        android:paddingBottom="10sp"
+        android:paddingLeft="15sp"
+        android:paddingRight="15sp"
+        android:paddingTop="5sp"
+        android:paddingBottom="5sp"
         android:textColor="@color/white"
         />
     <TextView
@@ -24,9 +24,9 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/hello"
-        android:textSize="20sp"
-        android:paddingTop="20sp" 
-        android:paddingBottom="15sp"
+        android:textSize="17sp"
+        android:paddingTop="15sp"
+        android:paddingBottom="10sp"
         android:textColor="@color/black"
         />
         <Button
