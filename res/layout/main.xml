@@ -19,6 +19,7 @@
             android:text="@string/Title"
             android:layout_marginTop="13sp"
             android:layout_marginLeft="7sp"
+            android:fontFamily="sans-serif"
             android:textSize="25sp"/>
     </LinearLayout>
 
@@ -46,6 +47,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:layout_marginLeft="10sp"
+            android:fontFamily="sans-serif-light"
             android:text="@string/Target_Device"/>
         <Button
             android:id="@+id/select_device"
@@ -53,6 +55,7 @@
             android:layout_height="fill_parent"
             android:onClick="onButtonClick"
             android:text="@string/Select_Device"
+            android:fontFamily="sans-serif"
             android:textSize="15sp"
             android:paddingRight="20sp"
             android:paddingLeft="20sp"
@@ -143,6 +146,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:layout_marginLeft="10sp"
+            android:fontFamily="sans-serif-light"
             android:text="@string/Discovered_Profiles"/>
         <Button
             android:id="@+id/discovery_device_services"
@@ -150,6 +154,7 @@
             android:layout_height="fill_parent"
             android:onClick="onButtonClick"
             android:text="@string/Discovery_Device_Service"
+            android:fontFamily="sans-serif"
             android:textSize="15sp"
             android:paddingRight="20sp"
             android:paddingLeft="20sp"
