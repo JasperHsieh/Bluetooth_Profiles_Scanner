@@ -137,6 +137,7 @@ public class SdpScannerActivity extends Activity {
                     isSecondUUIDs = true;
                 }else{
                     Log.d(TAG, "UUID is null");
+                    createDialog("Remote device does not respond", "Please turn on remote device's bluetooth\n WARGING: Some device may not respond to sdp command.").show();
                 }
 			}
 		}
