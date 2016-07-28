@@ -464,7 +464,7 @@ public class SdpScannerActivity extends Activity {
         View dialogView = inflater.inflate(R.layout.dialog, null);
         ((TextView)dialogView.findViewById(R.id.dialog_title)).setText(title);
         ((TextView)dialogView.findViewById(R.id.dialog_msg)).setText(msg);
-        builder.setView(dialogView);
+        builder.setView(dialogView, 0, 0, 0, 0);
         final AlertDialog dialog = builder.create();
         ((Button)dialogView.findViewById(R.id.dialog_button)).setOnClickListener(new OnClickListener(){
             public void onClick(View v){
