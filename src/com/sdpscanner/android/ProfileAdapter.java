@@ -111,8 +111,10 @@ public class ProfileAdapter extends BaseAdapter {
 
                 Log.d(TAG, "Adding service to row");
                 service_tv.setText(profile.getReadableServiceName(services.get(i)));
+                service_tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
                 service_tv.setTextColor(Color.parseColor("#7e7c7c"));
                 service_uuid_tv.setText(profile.getUuid(services.get(i)));
+                service_uuid_tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
                 service_uuid_tv.setTextColor(Color.parseColor("#7e7c7c"));
 
 				holder.linearLayout.addView(service_tv, params);

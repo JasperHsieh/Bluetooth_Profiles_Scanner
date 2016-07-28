@@ -19,7 +19,7 @@
             android:id="@+id/supported_profile"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:text="@string/Supported_Profile"
             />
     </LinearLayout>
